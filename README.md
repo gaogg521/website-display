@@ -167,7 +167,7 @@ npm run preview
 ```
 .
 ├── index.html
-├── image/                  # README 用 8 张截图（1.png～8.png，见 image/README.md）
+├── image/                  # README：1～8 分段截图 + 全页展示.png（见 image/README.md）
 ├── public/
 ├── carousel-sources/       # 轮播源图（大文件可按需 .gitignore）
 ├── scripts/
@@ -213,3 +213,11 @@ npm run preview
 ## 维护者
 
 [@gaogg521](https://github.com/gaogg521)
+
+---
+
+## 整页长图一览
+
+下面是一张 **自上而下的全页长截图**（`image/全页展示.png`）：单图串联从 **首屏 Hero**（痛点叙事、`npm run start`、轮播产品预览）经 **定位说明**、**CORE EDGE 六大优势**、**四条设计原则**、**FLOW 体验路径**、**能力矩阵**、**界面一瞥十图画廊**、**FAQ**，直至 **「准备体验」CTA** 与 **联系区**（飞书 / 微信 / GitHub）的完整版面。适合在 GitHub 上 **一眼看清整站结构与视觉节奏**；若要看某一区块的像素级细节，可配合上文 **`1.png`～`8.png`** 分段截图。
+
+![ONE CLAW 宣传站整页长图](./image/全页展示.png)
