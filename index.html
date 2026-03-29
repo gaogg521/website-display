@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="OpenClaw 装不好、配不对、状态看不清？龙虾可视化控制台：一条命令起面板，网关健康、模型与会话同屏，读本机 openclaw.json 与 Gateway 同步。"
+    />
+    <title>ONE CLAW · 龙虾可视化控制台</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ONE CLAW · 龙虾可视化控制台" />
+    <meta
+      property="og:description"
+      content="安装糊、配置碎、状态像黑盒？同屏看清网关与多 Agent，读本机真相；克隆后 npm run start 先跑起来（README 为准）。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="/brand-mark.png" type="image/png" sizes="128x128" />
+  </head>
+  <body>
+    <span id="top" class="visually-hidden" tabindex="-1" aria-hidden="true"></span>
+    <a class="skip" href="#main" data-i18n="a11y.skip">跳到正文</a>
+
+    <div class="page-bg-fx" aria-hidden="true">
+      <div class="page-bg-fx__mesh"></div>
+      <div class="page-bg-fx__glow page-bg-fx__glow--a"></div>
+      <div class="page-bg-fx__glow page-bg-fx__glow--b"></div>
+      <div class="page-bg-fx__glow page-bg-fx__glow--c"></div>
+      <div class="page-bg-fx__ring"></div>
+      <div class="page-bg-fx__scan"></div>
+    </div>
+    <div class="noise" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#top" id="brand-link" draggable="false">
+          <span id="brand-logo-anchor" class="brand-logo-wrap" draggable="false">
+            <img
+              class="brand-logo"
+              src="/brand-mark.png"
+              width="57"
+              height="56"
+              alt=""
+              draggable="false"
+            />
+          </span>
+          <span class="brand-text">ONE CLAW</span>
+        </a>
+        <button type="button" class="nav-toggle" aria-expanded="false" aria-label="菜单">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="nav" aria-label="主导航">
+          <a href="#edge" data-i18n="nav.edge">优势</a>
+          <a href="#highlights" data-i18n="nav.highlights">亮点</a>
+          <a href="#flow" data-i18n="nav.flow">体验路径</a>
+          <a href="#install" data-i18n="nav.install">安装方式</a>
+          <a href="#features" data-i18n="nav.features">能力</a>
+          <a href="#gallery" data-i18n="nav.gallery">界面</a>
+          <a href="#contact" data-i18n="nav.contact">联系</a>
+          <a href="#faq" data-i18n="nav.faq">FAQ</a>
+          <div class="nav-actions">
+            <label class="theme-field">
+              <span class="visually-hidden" data-i18n="theme.label">主题</span>
+              <select id="theme-select" class="theme-select" aria-describedby="theme-hint">
+                <option value="dark" data-i18n="theme.dark">深海暗夜</option>
+                <option value="light" data-i18n="theme.light">极简浅色</option>
+                <option value="cyber-blue" data-i18n="theme.cyber">蓝色科技风</option>
+                <option value="warm-orange" data-i18n="theme.warm">橙色暖调</option>
+                <option value="forest-green" data-i18n="theme.forest">森林绿境</option>
+              </select>
+            </label>
+            <span id="theme-hint" class="visually-hidden" data-i18n="theme.hint">与控制台五套全局主题一致</span>
+            <button type="button" class="btn-lang" id="btn-lang" aria-label="切换语言">EN</button>
+            <a class="nav-gh" id="link-github-nav" href="#" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn btn-primary btn-sm" id="link-readme" href="#" target="_blank" rel="noopener" data-i18n="nav.readme">文档</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-grid-lines" aria-hidden="true"></div>
+        <div class="container hero-grid">
+          <div class="hero-copy reveal">
+            <p class="eyebrow" data-i18n="hero.eyebrow">安装糊、配置碎、状态像黑盒？</p>
+            <h1 class="hero-title">
+              <span class="hero-line1" data-i18n="hero.line1">给 OpenClaw 一面</span>
+              <span class="hero-line2" data-i18n="hero.line2">看得懂、点得动的运维屏</span>
+            </h1>
+            <p class="hero-tagline" data-i18n="hero.tagline">龙虾可视化控制台 · 读本机真相，跟 Gateway 同步</p>
+            <p class="hero-lead" data-i18n="hero.lead">
+              装好后仍要面对文档散、JSON 不敢动、网关红了全靠猜。日常要盯的状态，我们收进一块屏。
+            </p>
+            <div class="hero-quickstart" role="note">
+              <span class="hero-quickstart-kicker" data-i18n="hero.quickLabel">核心一步</span>
+              <div class="hero-quickstart-inner">
+                <code class="hero-quickstart-cmd" translate="no">npm run start</code>
+                <span class="hero-quickstart-hint" data-i18n="hero.quickHint">克隆仓库后执行 · 环境以 README 为准</span>
+              </div>
+            </div>
+            <ul class="hero-points" data-i18n-aria="hero.pointsAria">
+              <li data-i18n="hero.pt1">网关 · 会话 · 多 Agent，一屏扫完</li>
+              <li data-i18n="hero.pt2">探测与向导写回配置，少手抄 JSON</li>
+              <li data-i18n="hero.pt3">官方 CLI 照常，面板只补可见性</li>
+            </ul>
+            <div class="hero-badges" aria-hidden="true">
+              <span class="pill">Next.js</span>
+              <span class="pill">Gateway-ready</span>
+              <span class="pill">6 locales</span>
+            </div>
+            <div class="hero-cta">
+              <a class="btn btn-primary" id="link-openclaw" href="#" target="_blank" rel="noopener" data-i18n="hero.ctaOpenclaw">OpenClaw 上游</a>
+              <a class="btn btn-ghost" id="link-repo" href="#" target="_blank" rel="noopener" data-i18n="hero.ctaRepo">面板源码</a>
+            </div>
+            <p class="hero-note" data-i18n="hero.note">
+              默认开发端口 3003 · Windows 可选 Electron 安装包 · 完整能力需本机 OpenClaw 与网关就绪
+            </p>
+          </div>
+          <div class="hero-shot reveal reveal-delay">
+            <div class="browser-frame float-slow">
+              <div class="browser-bar">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                <span class="browser-url">localhost:<span id="port-label">3003</span>/oneone-dashboard</span>
+              </div>
+              <div
+                class="hero-carousel"
+                id="hero-carousel"
+                role="region"
+                aria-roledescription="carousel"
+                aria-label=""
+                data-i18n-aria="carousel.region"
+              >
+                <div
+                  class="carousel-viewport"
+                  id="carousel-viewport"
+                  role="button"
+                  tabindex="0"
+                  data-i18n-aria="carousel.zoomAria"
+                >
+                  <div class="carousel-track" id="carousel-track" hidden></div>
+                  <div class="carousel-fallback" id="carousel-fallback">
+                    <img
+                      class="carousel-fallback-img"
+                      src="/hero-dashboard.png"
+                      width="1020"
+                      height="700"
+                      alt=""
+                      data-i18n-alt="hero.imgAlt"
+                    />
+                  </div>
+                </div>
+                <div class="carousel-chrome" id="carousel-chrome" hidden>
+                  <button type="button" class="carousel-arrow carousel-prev" aria-label="上一张" data-i18n-aria="carousel.prev">
+                    <span aria-hidden="true">‹</span>
+                  </button>
+                  <div class="carousel-dots" id="carousel-dots" role="tablist"></div>
+                  <button type="button" class="carousel-arrow carousel-next" aria-label="下一张" data-i18n-aria="carousel.next">
+                    <span aria-hidden="true">›</span>
+                  </button>
+                </div>
+                <p class="carousel-caption" id="carousel-caption" aria-live="polite"></p>
+                <p class="carousel-zoom-hint" data-i18n="carousel.zoomHint">点击画面可放大查看</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-tight" id="positioning">
+        <div class="container">
+          <div class="position-card reveal">
+            <h2 class="position-title" data-i18n="pos.title">我们解决的是哪一类问题？</h2>
+            <p class="position-body">
+              <span data-i18n="pos.before"></span>
+              <strong data-i18n="pos.brand"></strong>
+              <span data-i18n="pos.after"></span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-edge" id="edge">
+        <div class="container">
+          <p class="section-kicker reveal tech-kicker" data-i18n="edge.kicker">EDGE</p>
+          <h2 class="section-title reveal section-title-tech" data-i18n="edge.title">为什么选龙虾控制台</h2>
+          <p class="section-desc reveal" data-i18n="edge.desc"></p>
+          <ul class="edge-grid">
+            <li class="edge-card reveal">
+              <span class="edge-card-glow" aria-hidden="true"></span>
+              <span class="edge-icon" aria-hidden="true">⚡</span>
+              <h3 data-i18n="edge.p1t">一条命令跑起来</h3>
+              <p data-i18n="edge.p1d">下载/克隆本仓库后执行 npm run start 即可拉起控制台（环境与前置依赖以 README 为准）。把「装半天、文档翻几轮」收敛成单一入口，专治安装难。</p>
+            </li>
+            <li class="edge-card reveal">
+              <span class="edge-card-glow" aria-hidden="true"></span>
+              <span class="edge-icon" aria-hidden="true">◇</span>
+              <h3 data-i18n="edge.p2t">本地真相 · 网关同源</h3>
+              <p data-i18n="edge.p2d">openclaw.json、agents、sessions 与 Gateway 实时对齐；健康轮询、流式重启与诊断直连本机进程，拒绝黑盒状态。</p>
+            </li>
+            <li class="edge-card reveal">
+              <span class="edge-card-glow" aria-hidden="true"></span>
+              <span class="edge-icon" aria-hidden="true">◎</span>
+              <h3 data-i18n="edge.p3t">多 Agent 一屏掌控</h3>
+              <p data-i18n="edge.p3d">专家战队、任务追踪、会话与通道同导航可达；像素办公室三套场景把「谁在干活」做成热力、榜单与可编辑布局。</p>
+            </li>
+            <li class="edge-card reveal">
+              <span class="edge-card-glow" aria-hidden="true"></span>
+              <span class="edge-icon" aria-hidden="true">▸</span>
+              <h3 data-i18n="edge.p4t">模型可实验、可落库</h3>
+              <p data-i18n="edge.p4d">单模型探测、临时 Key、内网预设，通过后写入配置；六语 + 五套主题，与生产面板同一套交互与持久化。</p>
+            </li>
+            <li class="edge-card reveal">
+              <span class="edge-card-glow" aria-hidden="true"></span>
+              <span class="edge-icon" aria-hidden="true">⚙</span>
+              <h3 data-i18n="edge.p5t">配置可视化、少手抄 JSON</h3>
+              <p data-i18n="edge.p5d">模型、密钥与通道尽量用向导与表单落盘，配合探测与校验再写回配置，降低配错环境与漏项的概率，缓解配置难。</p>
+            </li>
+            <li class="edge-card reveal">
+              <span class="edge-card-glow" aria-hidden="true"></span>
+              <span class="edge-icon" aria-hidden="true">⊞</span>
+              <h3 data-i18n="edge.p6t">状态集中，管理有抓手</h3>
+              <p data-i18n="edge.p6d">健康、重启、告警、会话与通道在同一套导航里串起来；哪里卡住、谁异常，不必在多窗口间猜，管理路径更短。</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section section-muted" id="highlights">
+        <div class="container">
+          <p class="section-kicker reveal" data-i18n="highlights.kicker">WHY ONE CLAW</p>
+          <h2 class="section-title reveal" data-i18n="highlights.title">四条设计原则</h2>
+          <p class="section-desc reveal" data-i18n="highlights.desc">不是「再做一个聊天窗」，而是让 Agent 基础设施在屏幕上<strong>站得住、找得到、点得动</strong>。</p>
+          <ul class="highlight-row">
+            <li class="highlight-tile reveal">
+              <span class="hi-num">01</span>
+              <h3 data-i18n="highlights.h1t">文件即真相</h3>
+              <p data-i18n="highlights.h1d">openclaw.json、agents、sessions 仍是权威；面板读写都围绕本机目录与网关。</p>
+            </li>
+            <li class="highlight-tile reveal">
+              <span class="hi-num">02</span>
+              <h3 data-i18n="highlights.h2t">运维可扫一眼</h3>
+              <p data-i18n="highlights.h2d">Token、耗时、告警、通道与会话分布在多张表里，但共享同一套导航与主题。</p>
+            </li>
+            <li class="highlight-tile reveal">
+              <span class="hi-num">03</span>
+              <h3 data-i18n="highlights.h3t">模型改动可实验</h3>
+              <p data-i18n="highlights.h3d">探测、临时 Key、内网预设，通过后再写配置，减少手抄 JSON 出错。</p>
+            </li>
+            <li class="highlight-tile reveal">
+              <span class="hi-num">04</span>
+              <h3 data-i18n="highlights.h4t">工作室带点趣味</h3>
+              <p data-i18n="highlights.h4d">像素场景与热力、榜单是「状态可视化」，让值班氛围轻松一点。</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="flow">
+        <div class="container">
+          <p class="section-kicker reveal" data-i18n="flow.kicker">FLOW</p>
+          <h2 class="section-title reveal" data-i18n="flow.title">三分钟理解使用路径</h2>
+          <p class="section-desc reveal" data-i18n="flow.desc">以下为示意流程，具体命令以仓库 README 为准。</p>
+
+          <div class="flow-demo reveal">
+            <div class="flow-mock">
+              <aside class="flow-side">
+                <div class="flow-brand"><span class="flow-logo-dot"></span> Lobster UI</div>
+                <ul class="flow-nav">
+                  <li class="is-active" data-i18n="flow.nav1">首页</li>
+                  <li data-i18n="flow.nav2">OneOne 仪表盘</li>
+                  <li data-i18n="flow.nav3">模型</li>
+                  <li data-i18n="flow.nav4">像素办公室</li>
+                  <li data-i18n="flow.nav5">/setup</li>
+                </ul>
+              </aside>
+              <div class="flow-main">
+                <div class="flow-toolbar">
+                  <span class="flow-chip flow-chip-ok" data-i18n="flow.chip1">Gateway 在线</span>
+                  <span class="flow-chip" data-i18n="flow.chip2">openclaw.json</span>
+                </div>
+                <div class="flow-cards">
+                  <div class="flow-card">
+                    <span class="flow-card-label" data-i18n="flow.c1l">健康</span>
+                    <p class="flow-card-val" data-i18n="flow.c1v">轮询合并 · 单飞请求</p>
+                  </div>
+                  <div class="flow-card">
+                    <span class="flow-card-label" data-i18n="flow.c2l">Agent</span>
+                    <p class="flow-card-val" data-i18n="flow.c2v">任务与子代理一览</p>
+                  </div>
+                  <div class="flow-card">
+                    <span class="flow-card-label" data-i18n="flow.c3l">下一步</span>
+                    <p class="flow-card-val" data-i18n="flow.c3v">去模型页探测或重启网关</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ol class="flow-steps">
+              <li>
+                <strong data-i18n="flow.s1t">起面板</strong>
+                <span data-i18n="flow.s1d">dev 默认 3003，或与 Electron 包一致。</span>
+              </li>
+              <li>
+                <strong data-i18n="flow.s2t">确认 OpenClaw</strong>
+                <span data-i18n="flow.s2d">本机已安装 CLI、网关可达；必要时走 /setup。</span>
+              </li>
+              <li>
+                <strong data-i18n="flow.s3t">按需深入</strong>
+                <span data-i18n="flow.s3d">会话、告警、统计、技能库与网页 /chat 各取所需。</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-muted" id="install">
+        <div class="container">
+          <p class="section-kicker reveal" data-i18n="install.kicker">INSTALL</p>
+          <h2 class="section-title reveal" data-i18n="install.title">按系统选型</h2>
+          <p class="section-desc reveal" data-i18n="install.desc">与「桌面一键包」不同路径；这里描述的是<strong>本仓库面板</strong>的常见装法。</p>
+          <div class="install-grid">
+            <article class="install-card reveal">
+              <h3 data-i18n="install.win.t">Windows</h3>
+              <p data-i18n="install.win.d">可选 NSIS 安装包（Electron 内嵌 Node，拉起 standalone Next）。开发者也可用 Node 18+ 直接 clone 跑 dev。</p>
+            </article>
+            <article class="install-card reveal">
+              <h3 data-i18n="install.mac.t">macOS</h3>
+              <p data-i18n="install.mac.d">当前仓库主维护路径为源码 + npm；需本机 Node。可配合 Docker。</p>
+            </article>
+            <article class="install-card reveal">
+              <h3 data-i18n="install.linux.t">Linux</h3>
+              <p data-i18n="install.linux.d">与 macOS 相同：Node 18+ 或 Docker；适合跑在 homelab / VPS 上仅内网访问。</p>
+            </article>
+            <article class="install-card reveal">
+              <h3 data-i18n="install.docker.t">Docker</h3>
+              <p data-i18n="install.docker.d">仓库提供镜像说明时可整仓构建；挂载 OPENCLAW_HOME 与网关网络需自行规划。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="features">
+        <div class="container">
+          <p class="section-kicker reveal" data-i18n="features.kicker">CAPABILITIES</p>
+          <h2 class="section-title reveal" data-i18n="features.title">能力矩阵</h2>
+          <p class="section-desc reveal" data-i18n="features.desc">以下为产品模块速览，与主仓库 README 能力表一致。</p>
+          <div class="features-readme reveal">
+            <p class="features-readme-lead" data-i18n="features.readmeLead">
+              更完整的能力说明、路由表与高清预览图见主仓库 README：运维与可观测、Agent 与像素工作室、模型实验台、通道与会话、技能与 /setup、六语五主题等。
+            </p>
+            <p class="features-readme-actions">
+              <a class="readme-inline-link" id="link-readme-capabilities" href="#" target="_blank" rel="noopener" data-i18n="features.linkCapabilities">README · 能力总览</a>
+              <span class="readme-inline-sep" aria-hidden="true">·</span>
+              <a class="readme-inline-link" id="link-readme-preview" href="#" target="_blank" rel="noopener" data-i18n="features.linkPreview">README · 界面预览</a>
+            </p>
+          </div>
+          <ul class="feature-grid">
+            <li class="feature-card reveal">
+              <span class="feature-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 19V5M8 19V9M12 19V3M16 19v-6M20 19v-9"/></svg>
+              </span>
+              <h3 data-i18n="features.f1t">一站式运维</h3>
+              <p data-i18n="features.f1d">网关健康、Token 与耗时趋势、告警、会话与专家战队同屏可达。</p>
+            </li>
+            <li class="feature-card reveal">
+              <span class="feature-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+              </span>
+              <h3 data-i18n="features.f2t">专家工作室</h3>
+              <p data-i18n="features.f2d">办公室 / 星际舰桥 / 蘑菇林地三套像素场景，热力图与趣味榜单。</p>
+            </li>
+            <li class="feature-card reveal">
+              <span class="feature-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+              </span>
+              <h3 data-i18n="features.f3t">模型实验台</h3>
+              <p data-i18n="features.f3d">查看 Agent 与模型绑定、探测、内网预设，通过后写回 openclaw.json。</p>
+            </li>
+            <li class="feature-card reveal">
+              <span class="feature-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>
+              </span>
+              <h3 data-i18n="features.f4t">六语五主题</h3>
+              <p data-i18n="features.f4d">简繁英及东南亚语言；五套全局皮肤，localStorage 持久化。</p>
+            </li>
+            <li class="feature-card reveal">
+              <span class="feature-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              </span>
+              <h3 data-i18n="features.f5t">双轨安装</h3>
+              <p data-i18n="features.f5d">仅面板（exe / 源码 / Docker）或与 openclaw-oneclick 一键流水线并行。</p>
+            </li>
+            <li class="feature-card reveal">
+              <span class="feature-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="4 17 10 11 14 15 20 9"/><polyline points="14 7 20 7 20 13"/></svg>
+              </span>
+              <h3 data-i18n="features.f6t">CLI 友好</h3>
+              <p data-i18n="features.f6d">不替代官方终端；需要时照常使用 openclaw 命令。</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section section-muted" id="gallery">
+        <div class="container">
+          <p class="section-kicker reveal" data-i18n="gallery.kicker">SCREEN</p>
+          <h2 class="section-title reveal" data-i18n="gallery.title">界面一瞥</h2>
+          <p class="section-desc reveal" data-i18n="gallery.desc">
+            素材与说明对齐主仓库 README「预览」：完整宽度截图，点击任意缩略图可放大。
+          </p>
+          <div class="gallery-grid" id="gallery-grid" data-i18n-aria="gallery.gridAria" aria-label=""></div>
+          <p class="gallery-rebuild-hint reveal muted-hint" data-i18n="gallery.rebuildHint"></p>
+        </div>
+      </section>
+
+      <section class="section" id="stack">
+        <div class="container">
+          <p class="section-kicker reveal" data-i18n="stack.kicker">STACK</p>
+          <h2 class="section-title reveal" data-i18n="stack.title">技术栈</h2>
+          <p class="section-desc reveal" data-i18n="stack.desc">面板与 OpenClaw 解耦又深度集成：配置仍以本机文件与网关为权威来源。</p>
+          <ul class="stack-row reveal">
+            <li class="stack-pill"><span class="mono">Next.js</span> App Router</li>
+            <li class="stack-pill"><span class="mono">OpenClaw</span> Gateway</li>
+            <li class="stack-pill"><span class="mono">Node.js</span> 18+</li>
+            <li class="stack-pill" data-i18n="stack.optional">可选 MySQL 镜像</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section section-muted" id="faq">
+        <div class="container container-narrow">
+          <p class="section-kicker reveal" data-i18n="faq.kicker">FAQ</p>
+          <h2 class="section-title reveal" data-i18n="faq.title">常见问题</h2>
+          <p class="section-desc reveal" data-i18n="faq.desc">与主项目 README 排错思路一致；更细步骤请以文档为准。</p>
+
+          <div class="faq-list">
+            <details class="faq-item reveal">
+              <summary><span data-i18n="faq.q1"></span></summary>
+              <p data-i18n="faq.a1"> </p>
+            </details>
+            <details class="faq-item reveal">
+              <summary><span data-i18n="faq.q2"></span></summary>
+              <p data-i18n="faq.a2"> </p>
+            </details>
+            <details class="faq-item reveal">
+              <summary><span data-i18n="faq.q3"></span></summary>
+              <p data-i18n="faq.a3"> </p>
+            </details>
+            <details class="faq-item reveal">
+              <summary><span data-i18n="faq.q4"></span></summary>
+              <p data-i18n="faq.a4"> </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="section cta-section" id="start">
+        <div class="container cta-box reveal">
+          <h2 class="cta-title" data-i18n="start.title">准备体验？</h2>
+          <p class="cta-desc" data-i18n="start.desc">克隆龙虾可视化控制台仓库，按 README 选择安装路线；本站为静态宣传页，与运行时分离。</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" id="link-repo-2" href="#" target="_blank" rel="noopener" data-i18n="start.ctaRepo">打开 README</a>
+            <a class="btn btn-ghost" id="link-openclaw-2" href="#" target="_blank" rel="noopener" data-i18n="start.ctaOpenclaw">了解 OpenClaw</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="contact">
+      <div class="footer-contact-strip">
+        <div class="container footer-contact-inner">
+          <div class="footer-contact-text">
+            <p class="footer-contact-kicker" data-i18n="contact.kicker">CONTACT</p>
+            <p class="footer-contact-title" data-i18n="contact.title">交流与联系</p>
+            <p class="footer-contact-desc" data-i18n="contact.desc"></p>
+          </div>
+          <div class="footer-channels" aria-label="">
+            <figure class="footer-qr-card">
+              <div class="footer-qr-frame">
+                <img
+                  id="contact-img-feishu"
+                  class="footer-qr-img"
+                  src="/contact/feishu-qr.webp"
+                  width="160"
+                  height="160"
+                  alt=""
+                  loading="lazy"
+                  data-i18n-alt="contact.feishuAlt"
+                />
+              </div>
+              <figcaption class="footer-channel-label" data-i18n="contact.feishuCap">飞书群</figcaption>
+            </figure>
+            <figure class="footer-qr-card">
+              <div class="footer-qr-frame">
+                <img
+                  id="contact-img-wechat"
+                  class="footer-qr-img"
+                  src="/contact/wechat-qr.webp"
+                  width="160"
+                  height="160"
+                  alt=""
+                  loading="lazy"
+                  data-i18n-alt="contact.wechatAlt"
+                />
+              </div>
+              <figcaption class="footer-channel-label" data-i18n="contact.wechatCap">微信</figcaption>
+            </figure>
+            <div class="footer-github-channel">
+              <a
+                id="link-author-github"
+                class="footer-github-pill"
+                href="#"
+                target="_blank"
+                rel="noopener"
+                data-i18n="contact.githubLink"
+                >GitHub @gaogg521</a
+              >
+              <p class="footer-channel-label footer-github-cap" data-i18n="contact.githubCap">Issue / PR</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container footer-inner">
+        <div class="footer-top">
+          <p class="footer-brand"><span class="mono">ONE CLAW</span> · <span data-i18n="footer.tag">龙虾可视化控制台</span></p>
+          <div class="footer-links">
+            <a id="link-footer-gh" href="#" target="_blank" rel="noopener">GitHub</a>
+            <a id="link-footer-readme" href="#" target="_blank" rel="noopener" data-i18n="footer.linkDocs">文档</a>
+            <a href="#contact" data-i18n="footer.linkContact">联系</a>
+          </div>
+        </div>
+        <p class="footer-copy" data-i18n="footer.rights">静态宣传站 · build 产物可部署至任意 CDN / Pages</p>
+      </div>
+    </footer>
+
+    <div
+      id="img-lightbox"
+      class="img-lightbox"
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-label=""
+      data-i18n-aria="lightbox.aria"
+    >
+      <button type="button" class="img-lightbox-backdrop" data-i18n-aria="lightbox.close" aria-label="关闭"></button>
+      <div class="img-lightbox-panel">
+        <button type="button" class="img-lightbox-close" aria-label="关闭" data-i18n-aria="lightbox.close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <img class="img-lightbox-img" src="" alt="" width="1600" height="900" decoding="async" />
+        <p class="img-lightbox-caption"></p>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

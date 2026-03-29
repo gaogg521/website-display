@@ -1,0 +1,390 @@
+/* ════════════════════════════════════════════════════
+   tech-enhancements.css — 科技感视觉增强
+   依赖 style.css 中的 CSS 变量，必须在其后加载
+   ════════════════════════════════════════════════════ */
+
+/* ── 0. 每主题 RGB 通道（供 rgba() 精确控制透明度）── */
+:root,
+[data-theme="dark"]      { --ar: 56;  --ag: 189; --ab: 248; }
+[data-theme="cyber-blue"]  { --ar: 34;  --ag: 211; --ab: 238; }
+[data-theme="warm-orange"] { --ar: 251; --ag: 146; --ab: 60;  }
+[data-theme="forest-green"]{ --ar: 52;  --ag: 211; --ab: 153; }
+[data-theme="light"]       { --ar: 3;   --ag: 105; --ab: 161; }
+
+
+/* ════════════════════════════════════════════════════
+   2. 网格线呼吸动画（暗色主题）
+   ════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: no-preference) {
+  [data-theme="dark"] .hero-grid-lines,
+  [data-theme="cyber-blue"] .hero-grid-lines,
+  [data-theme="forest-green"] .hero-grid-lines {
+    animation: grid-breathe 6s ease-in-out infinite;
+  }
+}
+@keyframes grid-breathe {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1.0; }
+}
+
+
+/* ════════════════════════════════════════════════════
+   3. Section kicker：流动渐变文字
+   ════════════════════════════════════════════════════ */
+.section-kicker {
+  display: inline-block;
+  background: linear-gradient(90deg,
+    var(--cyan) 0%,
+    var(--accent) 40%,
+    var(--accent2) 70%,
+    var(--cyan) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  animation: kicker-flow 4s ease-in-out infinite alternate;
+}
+@keyframes kicker-flow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+
+/* ════════════════════════════════════════════════════
+   4. Edge 卡片：hover 扫光 + 悬停边框/阴影增强
+   ════════════════════════════════════════════════════ */
+
+/* 扫光层 */
+.edge-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 30%,
+    rgba(var(--ar), var(--ag), var(--ab), 0.14) 50%,
+    transparent 70%,
+    transparent 100%
+  );
+  background-size: 250% 100%;
+  background-position: -100% 0;
+  pointer-events: none;
+  z-index: 3;
+  border-radius: inherit;
+}
+.edge-card:hover::after {
+  animation: card-shimmer 0.7s ease forwards;
+}
+
+/* 悬停时边框 + 阴影增强（替代渐变边框，兼容 overflow:hidden）*/
+.edge-card {
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+}
+.edge-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+  box-shadow:
+    0 4px 28px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(var(--ar), var(--ag), var(--ab), 0.2) inset,
+    0 0 28px rgba(var(--ar), var(--ag), var(--ab), 0.15);
+  transform: translateY(-2px);
+}
+
+
+/* ════════════════════════════════════════════════════
+   5. Feature 卡片：hover 扫光 + overflow clip
+   ════════════════════════════════════════════════════ */
+.feature-card {
+  position: relative;
+  overflow: hidden;
+}
+.feature-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 30%,
+    rgba(var(--ar), var(--ag), var(--ab), 0.13) 50%,
+    transparent 70%,
+    transparent 100%
+  );
+  background-size: 250% 100%;
+  background-position: -100% 0;
+  pointer-events: none;
+  z-index: 3;
+  border-radius: inherit;
+}
+.feature-card:hover::after {
+  animation: card-shimmer 0.7s ease forwards;
+}
+
+@keyframes card-shimmer {
+  0%   { background-position: -100% 0; }
+  100% { background-position: 150%  0; }
+}
+
+
+/* ════════════════════════════════════════════════════
+   6. 主 CTA 按钮：扫光条（不影响现有 hover 效果）
+   ════════════════════════════════════════════════════ */
+.btn-primary {
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: -55%;
+  left: -80%;
+  width: 50%;
+  height: 210%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.28),
+    transparent
+  );
+  transform: skewX(-18deg);
+  pointer-events: none;
+  transition: none;
+}
+.btn-primary:hover::before {
+  animation: btn-shine 0.5s ease forwards;
+}
+@keyframes btn-shine {
+  0%   { left: -80%; }
+  100% { left: 130%; }
+}
+
+
+/* ════════════════════════════════════════════════════
+   7. 浏览器截图框 glow 增强
+   ════════════════════════════════════════════════════ */
+.browser-frame {
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(var(--ar), var(--ag), var(--ab), 0.12),
+    0 0 52px rgba(var(--ar), var(--ag), var(--ab), 0.1);
+  transition: box-shadow 0.4s ease;
+}
+.browser-frame:hover {
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(var(--ar), var(--ag), var(--ab), 0.32),
+    0 0 80px rgba(var(--ar), var(--ag), var(--ab), 0.22);
+}
+[data-theme="light"] .browser-frame {
+  box-shadow:
+    0 12px 48px rgba(0, 0, 0, 0.14),
+    0 0 0 1px rgba(var(--ar), var(--ag), var(--ab), 0.15);
+}
+
+
+/* ════════════════════════════════════════════════════
+   8. FAQ 悬停与展开发光
+   ════════════════════════════════════════════════════ */
+.faq-item {
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.faq-item:hover,
+.faq-item[open] {
+  border-color: color-mix(in srgb, var(--accent) 38%, var(--border));
+  box-shadow: 0 4px 22px rgba(var(--ar), var(--ag), var(--ab), 0.09);
+}
+.faq-item summary {
+  transition: color 0.2s;
+}
+.faq-item summary:hover {
+  color: var(--accent);
+}
+
+
+/* ════════════════════════════════════════════════════
+   9. CTA 区：旋转光晕背景
+   ════════════════════════════════════════════════════ */
+.cta-box {
+  overflow: hidden;
+}
+.cta-box::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(var(--ar), var(--ag), var(--ab), 0.07) 55deg,
+    transparent 110deg
+  );
+  pointer-events: none;
+  z-index: 0;
+  animation: cta-spin 14s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-box::before { animation: none; }
+}
+@keyframes cta-spin {
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.cta-box > * { position: relative; z-index: 1; }
+
+
+/* ════════════════════════════════════════════════════
+   10. 滚动条美化
+   ════════════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--accent) 40%, var(--border));
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--accent) 65%, var(--border));
+}
+
+
+/* ════════════════════════════════════════════════════
+   11. 卡片出现错落延迟（配合 .reveal Intersection）
+   ════════════════════════════════════════════════════ */
+.edge-grid .edge-card:nth-child(1) { transition-delay: 0s; }
+.edge-grid .edge-card:nth-child(2) { transition-delay: 0.09s; }
+.edge-grid .edge-card:nth-child(3) { transition-delay: 0.18s; }
+.edge-grid .edge-card:nth-child(4) { transition-delay: 0.27s; }
+.edge-grid .edge-card:nth-child(5) { transition-delay: 0.36s; }
+.edge-grid .edge-card:nth-child(6) { transition-delay: 0.45s; }
+
+.highlight-row .highlight-tile:nth-child(1) { transition-delay: 0s; }
+.highlight-row .highlight-tile:nth-child(2) { transition-delay: 0.09s; }
+.highlight-row .highlight-tile:nth-child(3) { transition-delay: 0.18s; }
+.highlight-row .highlight-tile:nth-child(4) { transition-delay: 0.27s; }
+
+.feature-grid .feature-card:nth-child(1) { transition-delay: 0s; }
+.feature-grid .feature-card:nth-child(2) { transition-delay: 0.07s; }
+.feature-grid .feature-card:nth-child(3) { transition-delay: 0.14s; }
+.feature-grid .feature-card:nth-child(4) { transition-delay: 0.21s; }
+.feature-grid .feature-card:nth-child(5) { transition-delay: 0.28s; }
+.feature-grid .feature-card:nth-child(6) { transition-delay: 0.35s; }
+
+.install-grid .install-card:nth-child(1) { transition-delay: 0s; }
+.install-grid .install-card:nth-child(2) { transition-delay: 0.08s; }
+.install-grid .install-card:nth-child(3) { transition-delay: 0.16s; }
+.install-grid .install-card:nth-child(4) { transition-delay: 0.24s; }
+
+
+/* ════════════════════════════════════════════════════
+   12. Install 卡片 hover 升起
+   ════════════════════════════════════════════════════ */
+.install-card {
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.install-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
+  box-shadow: 0 10px 34px rgba(var(--ar), var(--ag), var(--ab), 0.11);
+  transform: translateY(-3px);
+}
+
+
+/* ════════════════════════════════════════════════════
+   13. Stack pill hover 发光
+   ════════════════════════════════════════════════════ */
+.stack-pill {
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  cursor: default;
+}
+.stack-pill:hover {
+  border-color: color-mix(in srgb, var(--accent) 52%, var(--border));
+  box-shadow: 0 0 18px rgba(var(--ar), var(--ag), var(--ab), 0.22);
+  transform: translateY(-2px);
+}
+
+
+/* ════════════════════════════════════════════════════
+   14. Hero badge pill 脉冲发光
+   ════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: no-preference) {
+  .pill { animation: pill-pulse 3.5s ease-in-out infinite; }
+  .pill:nth-child(2) { animation-delay: 0.6s; }
+  .pill:nth-child(3) { animation-delay: 1.2s; }
+}
+@keyframes pill-pulse {
+  0%, 100% { box-shadow: 0 0 6px  rgba(var(--ar), var(--ag), var(--ab), 0.12); }
+  50%       { box-shadow: 0 0 20px rgba(var(--ar), var(--ag), var(--ab), 0.35); }
+}
+
+
+/* ════════════════════════════════════════════════════
+   15. 导航链接 hover：渐变下划线
+   ════════════════════════════════════════════════════ */
+.nav > a {
+  position: relative;
+}
+.nav > a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), var(--cyan));
+  transition: width 0.3s var(--ease-out);
+}
+.nav > a:hover {
+  text-decoration: none;
+  color: var(--text);
+}
+.nav > a:hover::after { width: 100%; }
+
+
+
+
+/* ════════════════════════════════════════════════════
+   17. Highlight tile 悬停顶部条动效
+   ════════════════════════════════════════════════════ */
+.highlight-tile::before {
+  transition: opacity 0.2s;
+}
+.highlight-tile:hover::before {
+  opacity: 1;
+  background: linear-gradient(
+    180deg,
+    var(--accent),
+    var(--cyan),
+    var(--accent2)
+  );
+}
+
+
+/* ════════════════════════════════════════════════════
+   18. footer-qr-frame hover glow
+   ════════════════════════════════════════════════════ */
+.footer-qr-frame {
+  transition: box-shadow 0.25s, border-color 0.25s;
+}
+.footer-qr-card:hover .footer-qr-frame {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+  box-shadow: 0 0 22px rgba(var(--ar), var(--ag), var(--ab), 0.22);
+}
+
+
+/* ════════════════════════════════════════════════════
+   19. section-edge 的 ::before 网格微增亮
+   ════════════════════════════════════════════════════ */
+.section-edge::before {
+  opacity: 1.0;
+}
+
+
+/* ════════════════════════════════════════════════════
+   20. 主题切换 select hover 发光
+   ════════════════════════════════════════════════════ */
+.theme-select:focus,
+.theme-select:hover {
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--border));
+  box-shadow: 0 0 0 2px rgba(var(--ar), var(--ag), var(--ab), 0.12);
+}

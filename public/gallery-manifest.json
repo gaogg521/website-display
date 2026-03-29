@@ -1,0 +1,44 @@
+{
+  "items": [
+    {
+      "src": "/gallery/g-01.webp",
+      "capKey": "gallery.c1"
+    },
+    {
+      "src": "/gallery/g-02.webp",
+      "capKey": "gallery.c2"
+    },
+    {
+      "src": "/gallery/g-03.webp",
+      "capKey": "gallery.c3"
+    },
+    {
+      "src": "/gallery/g-04.webp",
+      "capKey": "gallery.c4"
+    },
+    {
+      "src": "/gallery/g-05.webp",
+      "capKey": "gallery.c5"
+    },
+    {
+      "src": "/gallery/g-06.webp",
+      "capKey": "gallery.c6"
+    },
+    {
+      "src": "/gallery/g-07.webp",
+      "capKey": "gallery.c7"
+    },
+    {
+      "src": "/gallery/g-08.webp",
+      "capKey": "gallery.c8"
+    },
+    {
+      "src": "/gallery/g-09.webp",
+      "capKey": "gallery.c9"
+    },
+    {
+      "src": "/gallery/g-10.webp",
+      "capKey": "gallery.c10"
+    }
+  ]
+}
