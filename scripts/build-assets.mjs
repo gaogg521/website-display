@@ -4,7 +4,7 @@
  * 2) 将 brand-mark 同步为 public/logo.png（favicon 等兼容）
  * 3) 轮播：carousel-sources/ → public/carousel/slide-XX.webp（contain + 透明边）
  * 4) 界面一瞥：面板 docs/ 与 README「预览」对应的多张大图 → public/gallery/g-XX.webp + gallery-manifest.json
- * 5) 联系区：docs/飞书群.png、微信.png → public/contact/*.webp
+ * 5) 联系区：docs/QQ群.png、微信.png → public/contact/*.webp
  * 运行：npm run assets
  */
 import { execFileSync } from "child_process";
@@ -186,7 +186,7 @@ async function main() {
   const contactDir = path.join(publicDir, "contact");
   fs.mkdirSync(contactDir, { recursive: true });
   const CONTACT_QR = [
-    ["飞书群.png", "feishu-qr.webp"],
+    ["QQ群.png", "qq-qr.webp"],
     ["微信.png", "wechat-qr.webp"],
   ];
   for (const [srcName, destName] of CONTACT_QR) {

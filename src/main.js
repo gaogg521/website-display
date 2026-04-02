@@ -185,9 +185,9 @@ const STRINGS = {
     "contact.kicker": "CONTACT",
     "contact.title": "交流与联系",
     "contact.desc":
-      "使用问题、安装排错、功能建议或合作交流，欢迎飞书群或微信（与 README 一致）；也可在 GitHub 提 Issue。",
-    "contact.feishuAlt": "飞书群二维码，扫码加入交流群",
-    "contact.feishuCap": "飞书群",
+      "使用问题、安装排错、功能建议或合作交流，欢迎 QQ 群或微信（与 README 一致）；也可在 GitHub 提 Issue。",
+    "contact.qqAlt": "QQ 群二维码，扫码加入交流群",
+    "contact.qqCap": "QQ 群",
     "contact.wechatAlt": "微信二维码，扫码添加作者",
     "contact.wechatCap": "微信",
     "contact.githubLink": "GitHub @gaogg521",
@@ -380,9 +380,9 @@ const STRINGS = {
     "contact.kicker": "CONTACT",
     "contact.title": "Community & contact",
     "contact.desc":
-      "Questions, install help, ideas, or collaboration — join Feishu or add WeChat (same as README); GitHub Issues welcome too.",
-    "contact.feishuAlt": "Feishu group QR code — scan to join",
-    "contact.feishuCap": "Feishu",
+      "Questions, install help, ideas, or collaboration — join the QQ group or add WeChat (same as README); GitHub Issues welcome too.",
+    "contact.qqAlt": "QQ group QR code — scan to join",
+    "contact.qqCap": "QQ group",
     "contact.wechatAlt": "WeChat QR code — scan to add",
     "contact.wechatCap": "WeChat",
     "contact.githubLink": "GitHub @gaogg521",
@@ -623,7 +623,7 @@ function observeRevealNodes(nodes) {
 }
 
 function wireContactQrFallback() {
-  ["contact-img-feishu", "contact-img-wechat"].forEach((id) => {
+  ["contact-img-qq", "contact-img-wechat"].forEach((id) => {
     const img = document.getElementById(id);
     if (!img) return;
     img.addEventListener("error", () => {
